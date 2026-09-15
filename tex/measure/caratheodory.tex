@@ -232,7 +232,50 @@ the other half appears later as \Cref{prop:cm_compatible}.
 	the infimum of coverings of the set $A$ by rectangles.
 	Here is a picture you might use to imagine the
 	situation with $A$ being the unit disk.
-	\missingfigure{circles covered by rectangles}
+	\begin{center}
+	\begin{asy}
+		size(5cm);
+		real h = 0.25;
+		for (int i = -4; i < 4; ++i) {
+			for (int j = -4; j < 4; ++j) {
+				real x = i*h;
+				real y = j*h;
+				real dx = max(max(x, -(x+h)), 0);
+				real dy = max(max(y, -(y+h)), 0);
+				if (dx*dx + dy*dy <= 1)
+					filldraw( (x,y)--(x+h,y)--(x+h,y+h)--(x,y+h)--cycle,
+						opacity(0.1)+lightcyan, heavycyan );
+			}
+		}
+		filldraw(unitcircle, opacity(0.2)+lightgreen, deepgreen);
+		label("total area $3.75$", (0,-1), 3*dir(-90));
+	\end{asy}
+	\qquad
+	\begin{asy}
+		size(5cm);
+		real h = 0.125;
+		for (int i = -8; i < 8; ++i) {
+			for (int j = -8; j < 8; ++j) {
+				real x = i*h;
+				real y = j*h;
+				real dx = max(max(x, -(x+h)), 0);
+				real dy = max(max(y, -(y+h)), 0);
+				if (dx*dx + dy*dy <= 1)
+					filldraw( (x,y)--(x+h,y)--(x+h,y+h)--(x,y+h)--cycle,
+						opacity(0.1)+lightcyan, heavycyan );
+			}
+		}
+		filldraw(unitcircle, opacity(0.2)+lightgreen, deepgreen);
+		label("total area $3.5$", (0,-1), 3*dir(-90));
+	\end{asy}
+	\end{center}
+	We get to choose the covering,
+	and $\lambda^\ast(A)$ is the infimum over all of them.
+	The coarse covering on the left gives only $\lambda^\ast(A) \le 3.75$,
+	while the finer one on the right gives $\lambda^\ast(A) \le 3.5$.
+	Refining the grid further drives the wasted area to zero,
+	so $\lambda^\ast(A) \le \pi$
+	(that it is not smaller is \Cref{prop:lebesgue_rectangle} doing its job).
 \end{example}
 
 
@@ -592,7 +635,24 @@ when $\mu_0$ is $\sigma$-finite.
 \end{proof}
 
 \section{From now on, we assume the Borel measure}
-\todo{explain why}
+We now have two $\sigma$-algebras on $\RR^n$ to pick from,
+so why should we stick with Borel?
+\begin{itemize}
+	\ii $\SB(\Omega)$ depends only on the topology of $\Omega$,
+	while $\mathcal{L}(\RR^n)$ is the completion with respect to
+	one particular measure.
+	You cannot even write down the latter
+	until you have built $\lambda$ first.
+	\ii Most of the spaces in later chapters carry a topology
+	and no Lebesgue measure at all (spoiler alert for Pontryagin duality).
+	On such spaces the Borel algebra is the only one available.
+	\ii Borel measurability survives composition.
+	If $f$ and $g$ are Borel measurable, then so is $f \circ g$.
+	This can fail for Lebesgue measurable $f$ and $g$.
+	\ii Every Lebesgue measurable set differs from a Borel set
+	by a subset of a null set anyway.
+	So all integrals maintain their value.
+\end{itemize}
 
 \section{\problemhead}
 \begin{dproblem}
